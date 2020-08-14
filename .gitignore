@@ -1,0 +1,4 @@
+/target/
+/.idea/
+/*/target/
+hibernate-validator-map.iml
