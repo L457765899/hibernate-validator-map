@@ -17,7 +17,7 @@ public class JsonArrayValidator extends AbstractCustomValidator<Annotation, Stri
         }
         String message = key + "的值不是一个json数组";
         try {
-            JsonElement parse = new JsonParser().parse(value);
+            JsonElement parse = JsonParser.parseString(value);
             boolean jsonArray = parse.isJsonArray();
             if(!jsonArray) {
                 return new ValidResult(false, message);

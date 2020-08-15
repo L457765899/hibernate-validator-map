@@ -5,7 +5,9 @@ import com.sxb.lin.hibernate.validator.dto.ValidResult;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Map;
 
-
+/**
+ * 这个验证器是转给map使用的，不能在CustomCheck的customValidators中定义
+ */
 public class TypeValidator extends AbstractMapCheckCustomValidator<Object> {
 
     @Override
