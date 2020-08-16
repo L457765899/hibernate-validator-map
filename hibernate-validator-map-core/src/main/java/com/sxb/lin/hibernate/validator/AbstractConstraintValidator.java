@@ -26,8 +26,6 @@ import org.hibernate.validator.internal.constraintvalidators.bv.size.SizeValidat
 import org.hibernate.validator.internal.constraintvalidators.hv.LengthValidator;
 import org.hibernate.validator.internal.constraintvalidators.hv.LuhnCheckValidator;
 import org.hibernate.validator.internal.constraintvalidators.hv.URLValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 
 import javax.validation.ConstraintValidator;
@@ -47,8 +45,6 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractConstraintValidator<T> implements ConstraintValidator<MapCheck, T> {
-
-    private static final Logger logger = LoggerFactory.getLogger(AbstractConstraintValidator.class);
 
     private MapCheck annotation;
 
@@ -88,10 +84,7 @@ public abstract class AbstractConstraintValidator<T> implements ConstraintValida
     }
 
     private boolean isExist(Object[] array){
-        if(array != null && array.length > 0){
-            return true;
-        }
-        return false;
+        return array != null && array.length > 0;
     }
 
     protected boolean doValid(Map<String, Object> map, ConstraintValidatorContext context) {
@@ -99,12 +92,11 @@ public abstract class AbstractConstraintValidator<T> implements ConstraintValida
         Object value = map.get(key);
         StringBuilder builder = new StringBuilder();
         boolean isValid = true;
-        for(int i = 0, len = initValidators.size(); i < len; i++){
-            ConstraintValidatorProxy validator = initValidators.get(i);
+        for (ConstraintValidatorProxy validator : initValidators) {
             ValidResult valid = validator.isValid(value, context, map, key);
-            if(!valid.isValid()){
+            if (!valid.isValid()) {
                 isValid = false;
-                if(builder.length() > 0) builder.append(",");
+                if (builder.length() > 0) builder.append(",");
                 builder.append(valid.getMessage());
             }
         }

@@ -3,6 +3,7 @@ package com.sxb.lin.hibernate.validator.test.validator;
 import com.sxb.lin.hibernate.validator.AbstractCustomValidator;
 import com.sxb.lin.hibernate.validator.dto.ValidResult;
 import com.sxb.lin.hibernate.validator.test.dto.AdminDto;
+import com.sxb.lin.hibernate.validator.test.dto.ParamDto;
 import com.sxb.lin.hibernate.validator.test.other.ContentTypeCheck;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,6 +31,9 @@ public class ContentTypeValidator extends AbstractCustomValidator<Annotation, St
         }else if(parent instanceof AdminDto) {
             AdminDto param = (AdminDto) parent;
             type = param.getType();
+        }else if(parent instanceof ParamDto) {
+            ParamDto<?> paramDto = (ParamDto<?>) parent;
+            type = ((AdminDto) paramDto.getParam()).getType();
         }
 
         if(contentTypeCheck.check(type, value)){

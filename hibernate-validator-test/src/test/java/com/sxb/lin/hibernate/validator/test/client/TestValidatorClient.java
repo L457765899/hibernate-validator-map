@@ -171,6 +171,19 @@ public class TestValidatorClient {
 
     @Test
     public void customValidParamObject() {
+        AdminDto adminDto = new AdminDto();
+        adminDto.setId(1);
+        adminDto.setUrl("www.baidu.com");
+        adminDto.setJson("{}");
+        adminDto.setType(1);
+        //adminDto.setContent("123456");
+        adminDto.setContent("abcde");
 
+        ParamDto<AdminDto> paramDto = new ParamDto<AdminDto>();
+        paramDto.setParam(adminDto);
+
+        String json = new Gson().toJson(paramDto);
+        String post = this.post("http://localhost:8080/test/validator/customValidParamObject.json", null, json);
+        System.out.println(post);
     }
 }

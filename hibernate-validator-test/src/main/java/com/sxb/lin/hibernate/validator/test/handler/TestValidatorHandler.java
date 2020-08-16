@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Map;
 
 @Service
-@Validated
+@Validated //必须在类上指定@Validated注解，如果不指定方法上即使有@MapCheck,@Valid验证也不会生效
 public class TestValidatorHandler {
 
     public void validMap(@MapCheck.List({
@@ -44,12 +44,12 @@ public class TestValidatorHandler {
     }
 
     public void validObject(@Valid UserDto userDto) {
-        //对象必须加上@Valid注解
+        //参数对象必须加上@Valid注解，不然验证不会生效
         System.out.println("validObject验证成功:" + new Gson().toJson(userDto));
     }
 
     public void validParamObject(@Valid ParamDto<UserDto> paramDto) {
-        //对象必须加上@Valid注解
+        //对象必须加上@Valid注解，不然验证不会生效
         System.out.println("validParamObject验证成功:" + new Gson().toJson(paramDto));
     }
 
@@ -89,10 +89,14 @@ public class TestValidatorHandler {
     }
 
     public void customValidObject(@Valid AdminDto adminDto) {
+        //参数对象必须加上@Valid注解，不然验证不会生效
+        //对象使用@CustomCheck，必须开启aop，注入ValidatedAspect
         System.out.println("customValidObject验证成功:" + new Gson().toJson(adminDto));
     }
 
     public void customValidParamObject(@Valid ParamDto<AdminDto> paramDto) {
+        //参数对象必须加上@Valid注解，不然验证不会生效
+        //对象使用@CustomCheck，必须开启aop，注入ValidatedAspect
         System.out.println("customValidParamObject验证成功:" + new Gson().toJson(paramDto));
     }
 }
